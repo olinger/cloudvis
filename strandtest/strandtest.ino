@@ -34,13 +34,13 @@ void setup() {
 
 void loop() {
   // Some example procedures showing how to display to the pixels:
-  nStep(5, strip.Color(255, 0, 0), 1000);
-  nStep(5, strip.Color(255, 0, 255), 1000);
-  nStep(5, strip.Color(0, 255, 0), 1000);
- /* colorWipe(strip.Color(255, 0, 0), 50); // Red
+  //nStep(5, strip.Color(255, 0, 0), 1000);
+ //nStep(5, strip.Color(255, 0, 255), 1);
+  nStep(5, strip.Color(0, 255, 0), 100);
+  colorWipe(strip.Color(255, 0, 0), 50); // Red
   colorWipe(strip.Color(0, 255, 0), 50); // Green
   colorWipe(strip.Color(0, 0, 255), 50); // Blue
-//colorWipe(strip.Color(0, 0, 0, 255), 50); // White RGBW
+colorWipe(strip.Color(0, 0, 0, 255), 50); // White RGBW
   // Send a theater pixel chase in...
   theaterChase(strip.Color(127, 127, 127), 50); // White
   theaterChase(strip.Color(127, 0, 0), 50); // Red
@@ -48,7 +48,7 @@ void loop() {
 
   rainbow(20);
   rainbowCycle(20);
-  theaterChaseRainbow(50);*/
+  theaterChaseRainbow(50);
 }
 
 // Fill the dots one after the other with a color
