@@ -1,8 +1,8 @@
 #include <ESP8266WiFi.h>
 #include <Adafruit_NeoPixel.h>
 
-const char* ssid = "72 Pinewoods_2.4GHz";
-const char* password = "JOSSWG72";
+const char* ssid = "Jazmine's iPhone";
+const char* password = "password";
 
 //int ledPin = 2; // GPIO2
 WiFiServer server(80);
@@ -10,14 +10,6 @@ WiFiServer server(80);
 //NEOPIXEL stuff
 #define PIN 4
 
-// Parameter 1 = number of pixels in strip
-// Parameter 2 = Arduino pin number (most are valid)
-// Parameter 3 = pixel type flags, add together as needed:
-//   NEO_KHZ800  800 KHz bitstream (most NeoPixel products w/WS2812 LEDs)
-//   NEO_KHZ400  400 KHz (classic 'v1' (not v2) FLORA pixels, WS2811 drivers)
-//   NEO_GRB     Pixels are wired for GRB bitstream (most NeoPixel products)
-//   NEO_RGB     Pixels are wired for RGB bitstream (v1 FLORA pixels, not v2)
-//   NEO_RGBW    Pixels are wired for RGBW bitstream (NeoPixel RGBW products)
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(30, PIN, NEO_GRB + NEO_KHZ800);
 
 void setup() {
@@ -53,8 +45,6 @@ Serial.print(WiFi.localIP());
 Serial.println("/");
 
 //neopixel setup
-  Serial.begin(115200);
-  delay(100);
   strip.begin();
   strip.show(); // Initialize all pixels to 'off'
 }
@@ -79,18 +69,18 @@ client.flush();
 
 // Match the request
 
-/*int value = LOW;
-if (request.indexOf("/LED=ON") != -1) {
-digitalWrite(ledPin, HIGH);
+int value = LOW;
+if (request.indexOf("/LED=RED") != -1) {
+turnColor(strip.Color(255,0,0));
 value = HIGH;
 }
-if (request.indexOf("/LED=OFF") != -1) {
-digitalWrite(ledPin, LOW);
+if (request.indexOf("/LED=GREEN") != -1) {
+turnColor(strip.Color(0,255,0));
 value = LOW;
 }
 
 // Set ledPin according to the request
-//digitalWrite(ledPin, value);*/
+//digitalWrite(ledPin, value);
 
 // Return the response
 client.println("HTTP/1.1 200 OK");
@@ -101,14 +91,14 @@ client.println("<html>");
 
 client.print("Led pin is now: ");
 
-/*if(value == HIGH) {
-client.print("On");
+if(value == HIGH) {
+client.print("Red");
 } else {
-client.print("Off");
-}*/
+client.print("Green");
+}
 client.println("<br><br>");
-client.println("Click <a href=\"/LED=ON\">here</a> turn the LED on pin 2 ON<br>");
-client.println("Click <a href=\"/LED=OFF\">here</a> turn the LED on pin 2 OFF<br>");
+client.println("Click <a href=\"/LED=RED\">here</a> turn the LEDs RED<br>");
+client.println("Click <a href=\"/LED=GREEN\">here</a> turn the LEDs GREEN<br>");
 client.println("</html>");
 
 delay(1);
@@ -119,7 +109,10 @@ Serial.println("");
 
 void turnColor(uint32_t c)
 {
-//  for(int i = 0; i < strip.numLeds()
+  for(int i = 0; i < strip.numPixels(); i++)
+  {
+    strip.setPixelColor(i, c);
+    strip.show();
+  }
 }
-
 
