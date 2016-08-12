@@ -1,4 +1,4 @@
-class ColorSet
+/*class ColorSet
 {
   int size;
   color[] colors;// = new color[size];
@@ -11,4 +11,4 @@ class ColorSet
       
     }
   }
-}
+}*/

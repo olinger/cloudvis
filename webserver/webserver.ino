@@ -6,6 +6,7 @@ const char* password = "password";
 
 //int ledPin = 2; // GPIO2
 WiFiServer server(80);
+boolean alreadyConnected = false; // whether or not the client was connected previously
 
 //NEOPIXEL stuff
 #define PIN 4
@@ -52,6 +53,28 @@ Serial.println("/");
 void loop() {
 // Check if a client has connected
 WiFiClient client = server.available();
+
+  // when the client sends the first byte, say hello:
+  if (client) {
+    if (!alreadyConnected) {
+      // clear out the input buffer:
+      client.flush();
+      Serial.println("We have a new client");
+      client.println("Hello, client!");
+      alreadyConnected = true;
+    }
+
+    if (client.available() > 0) {
+      // read the bytes incoming from the client:
+      char thisChar = client.read();
+      // echo the bytes back to the client:
+      server.write(thisChar);
+      // echo the bytes to the server as well:
+      Serial.write(thisChar);
+    }
+  }
+}
+/*
 if (!client) {
 return;
 }
@@ -101,11 +124,9 @@ client.println("Click <a href=\"/LED=RED\">here</a> turn the LEDs RED<br>");
 client.println("Click <a href=\"/LED=GREEN\">here</a> turn the LEDs GREEN<br>");
 client.println("</html>");
 
-delay(1);
+/*delay(1);
 Serial.println("Client disonnected");
-Serial.println("");
-
-}
+Serial.println("");*/
 
 void turnColor(uint32_t c)
 {
