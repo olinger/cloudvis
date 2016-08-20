@@ -11,7 +11,7 @@ import processing.core.*;
 Client myClient; 
 
 Minim minim;
-AudioOutput in;
+AudioInput in;
 FFT fft;
 float[] angle;
 float[] y, x;
@@ -19,7 +19,7 @@ color fill;
 
 //client
 Client client;
-boolean connect = false;
+boolean connect = true;
 
 BeatDetect heart = new BeatDetect();
 void setup() {
@@ -27,15 +27,15 @@ void setup() {
   background(255);
 
   minim = new Minim(this);
-  in = minim.getLineOut(Minim.STEREO, 2048, 192000.0);
+  in = minim.getLineIn(Minim.STEREO, 2048, 192000.0);
   fft = new FFT(in.bufferSize(), in.sampleRate());
   y = new float[fft.specSize()];
   x = new float[fft.specSize()];
   angle = new float[fft.specSize()];
   if(connect)
-    client = new Client(this, "10.0.0.6",80);
-  //println("saying hello");
- // client.write("hellooooo/r");
+    client = new Client(this, "172.20.10.4",80);
+   // println("saying hello");
+    //client.write("hellooooo");
 }
 
 void draw() 
@@ -49,16 +49,15 @@ void draw()
   {
     if(heart.getDetectCenterFrequency(i) != 0)
     {
-        println(i);
+        /*println(i);
         println(heart.getDetectCenterFrequency(i));
-        println("");
+        println("");*/
 
     }
     if(fft.getBand(i) > max)
     {
       max = fft.getBand(i);
     }
-    println(fft.getBand(i));
     // draw the line for frequency band i, scaling it up a bit so we can see it
     stroke(0, 0, 255);
     line( i, height, i, height - fft.getBand(i)*8 );
@@ -113,13 +112,15 @@ void draw()
     //wait for client
   }*/
   String message = str(fill) + '\r';
-   if(connect && client.available() > 0)
-    {
+ // println(message);
+
+   //if(client.available() > 0)
+   // {
       //client.read();
       println(message);
       client.write(message);
  //     client.clear();
-  }
+ // }
  // delay(1000);
   //client.write("/LED=GREEN\r");
   //client.write("r:"+fill+"g:"+fill+"b:255\r");

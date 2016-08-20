@@ -34,8 +34,8 @@ void setup() {
 
 void loop() {
   // Some example procedures showing how to display to the pixels:
-  //nStep(5, strip.Color(255, 0, 0), 1000);
- //nStep(5, strip.Color(255, 0, 255), 1);
+  nStep(5, strip.Color(255, 0, 0), 100);
+ nStep(5, strip.Color(255, 0, 255), 100);
   nStep(5, strip.Color(0, 255, 0), 100);
   colorWipe(strip.Color(255, 0, 0), 50); // Red
   colorWipe(strip.Color(0, 255, 0), 50); // Green
