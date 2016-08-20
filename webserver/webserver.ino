@@ -1,8 +1,8 @@
 #include <ESP8266WiFi.h>
 #include <Adafruit_NeoPixel.h>
 
-const char* ssid = "Jazmine's iPhone";
-const char* password = "password";
+const char* ssid = "TheMulligan-2.4";
+const char* password = "7CC4LCDCHHHKAH3C";
 
 //int ledPin = 2; // GPIO2
 WiFiServer server(80);
@@ -52,26 +52,23 @@ Serial.println("/");
 
 void loop() {
 // Check if a client has connected
-WiFiClient client = server.available();
+  WiFiClient client = server.available();
 
   // when the client sends the first byte, say hello:
   if (client) {
-    if (!alreadyConnected) {
-      // clear out the input buffer:
-      client.flush();
-      Serial.println("We have a new client");
-      client.println("Hello, client!");
-      alreadyConnected = true;
+    while(client.connected())
+    {
+      if(client.available())
+      {
+        String in = client.readStringUntil('\r');
+        Serial.println(in);
+        turnColor(strip.Color(in.toInt(), in.toInt(), 255));
+      }
     }
-
-    if (client.available() > 0) {
-      // read the bytes incoming from the client:
-      char thisChar = client.read();
-      // echo the bytes back to the client:
-      server.write(thisChar);
-      // echo the bytes to the server as well:
-      Serial.write(thisChar);
-    }
+  }
+  else
+  {
+    return;
   }
 }
 /*
